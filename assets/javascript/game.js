@@ -5,32 +5,41 @@ var counter = 0;
 var img;
 var charArr = [];
 
-function Setup(charName, hp, attack, counter, picSource) {
-    this.name = charName;
-    this.hp = hp;
-    this.attack = attack;
-    this.counter = counter;
-    this.picSource = picSource;
-    charArr.push(this);
+
+class Character {
+    constructor(name,hp,ap,ca,picSrc){
+        this.name = name;
+        this.hp = hp;
+        this.ap = ap;
+        this.ca = ca;
+        this.picSrc = picSrc;
+        charArr.push(this);
+    }
 }
 
-function initialize() {
-    var mouse = new Setup("mouse",120,25,20, "assets/images/mouse-droid.jpeg");
-    var willrow = new Setup("willrow",150,20,15, "assets/images/willrow-hood.jpg");
-    var porkins = new Setup("porkins", 100,20,10, "assets/images/porkins-2.webp");
-    var figrin = new Setup("figrin", 160,35,20, "assets/images/figrin-dan.jpg");    
-}
+var mouse = new Character('mouse',120,25,20,"assets/images/mouse-droid.jpeg");
+var willrow = new Character("willrow",150,20,15, "assets/images/willrow-hood.jpg");
+var porkins = new Character("porkins", 100,20,10, "assets/images/porkins-2.webp");
+var figrin = new Character("figrin", 160,35,20, "assets/images/figrin-dan.jpg"); 
 
-initialize();
+console.log(mouse.picSrc);
 
-console.log(charArr[3].picSource);
+charArr.forEach(element => {
+    console.log("wow")
+    var charImg = $("<img>");
+    charImg.addClass("character");
+    charImg.attr("src", element.picSrc);
+    $("#characters-div").append(charImg);
+});
 
 
 
+// console.log(mouse);
 
+// console.log(charArr);
 
-
-
+var attackTally = 0;
 $(".character").on("click", function() {
-    console.log('you have clicked on ' + $("this.hp") + '!');
+    attackTally += 10;
+    console.log('you have dealt ' + attackTally + ' damage!');
 })
