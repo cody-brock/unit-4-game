@@ -22,10 +22,10 @@ class Character {
 }
 
 //gives the constructor the info it needs
-var mouse = new Character("mouse",120,25,20,"assets/images/mouse-droid.jpeg");
-var willrow = new Character("willrow",150,20,15, "assets/images/willrow-hood.jpg");
-var porkins = new Character("porkins", 100,20,10, "assets/images/porkins-2.webp");
-var figrin = new Character("figrin", 160,35,20, "assets/images/figrin-dan.jpg"); 
+var mouse = new Character("mouse",120,15,20,"assets/images/mouse-droid.jpeg");
+var willrow = new Character("willrow",150,10,15, "assets/images/willrow-hood.jpg");
+var porkins = new Character("porkins", 100,10,10, "assets/images/porkins-2.webp");
+var figrin = new Character("figrin", 160,15,20, "assets/images/figrin-dan.jpg"); 
 
 //pushes the character images onto the page, adds class and id
 function makeImgDiv (x, destination) {
@@ -85,19 +85,37 @@ $(".characters").on("click", function () {
 })
 
 
+//function to increment player's attack power
+var playerAttackIncrease = function(player) {
+    player.ap = player.ap + player.ap;
+}
+
+//function for handling the logic behind the attack button conditions
 var attackFun = function(player, defender) {
+    //if both characters have hp left...
     if (player.hp > 0 && defender.hp > 0) {
-        defender.hp - player.ap;
+        //first player attacks defender
+        defender.hp = defender.hp - player.ap;
+        //increments the player's attack power
+        playerAttackIncrease(player);
+        //if defender still has hp...
         if (defender.hp > 0) {
-            player.hp - defender.ca;
+            player.hp = player.hp - defender.ca;
+        } 
+        //if defender has no hp, victory conditions met, remove defender
+        //and allow new one to be selected
+        else if (defender.hp <= 0) {
+            console.log("victory");
+            $("#defender-div").empty();
+            defenderSelected = false;
         }
     }
     console.log(player.hp, defender.hp);
 }
 
+//when "attack" button is pressed...
 $("#fight-button").on("click", function () {
     if (playerChosen && defenderSelected) {
-        console.log("fighting", player.hp);
         attackFun(player, defender);
     }
 })
