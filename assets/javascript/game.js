@@ -68,11 +68,21 @@ $(".characters").on("click", function () {
 
     //choose defender, move to Defender div
     $(".enemies").on("click", function () {
+        if (!defenderSelected) {
             var charImg = $("<img>")
             charImg.removeClass("enemies");
             charImg.addClass("defender");
-            $("#defender-div").append(this);        
+            $("#defender-div").append(this);
+            defenderSelected = true;
+        }
     })
+})
+
+$("#fight-button").on("click", function () {
+    console.log("fighting");
+    if (playerChosen && defenderSelected) {
+        console.log("oh yeah");
+    }
 })
 
 
