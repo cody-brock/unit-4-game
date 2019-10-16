@@ -16,3 +16,7 @@
     border-color: red;
 }
 
+#restart-button {
+    display: none;
+}
+
