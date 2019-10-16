@@ -57,20 +57,25 @@ $(".characters").on("click", function () {
 
         for (let i=0; i<charArr.length; i++) {
             var charImg = $("<img>")
-            charImg.addClass("enemies")
+            charImg.removeClass("characters");
+            charImg.addClass("enemies");
             charImg.attr("src", charArr[i].picSrc);
             charImg.attr("id", charArr[i].name)
             $("#enemies-div").append(charImg);
             $("#characters-div").empty();
         }    
     }   
+
+    //choose defender, move to Defender div
+    $(".enemies").on("click", function () {
+            var charImg = $("<img>")
+            charImg.removeClass("enemies");
+            charImg.addClass("defender");
+            $("#defender-div").append(this);        
+    })
 })
 
-//choose defender, move to Defender div
-$(".enemies").on("click", function () {
-    console.log("anyone home")
-    $("#defender-div").append(this);
-})
+
     
     
         
