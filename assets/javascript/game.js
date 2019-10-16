@@ -6,7 +6,8 @@ var img;
 var charArr = [];
 var playerChosen = false;
 var defenderSelected = false;
-var player
+var player;
+var defender;
 
 //Constructor to give characters their attributes
 class Character {
@@ -49,7 +50,7 @@ $(".characters").on("click", function () {
         for (let i=0; i<charArr.length; i++) {
             if (charArr[i].name === this.id) {
                 playerChosen = true;
-                player = this.id;
+                player = charArr[i];
                 charArr.splice(i, 1);
                 $("#your-character").append(this);
             }
@@ -69,21 +70,39 @@ $(".characters").on("click", function () {
     //choose defender, move to Defender div
     $(".enemies").on("click", function () {
         if (!defenderSelected) {
-            var charImg = $("<img>")
-            charImg.removeClass("enemies");
-            charImg.addClass("defender");
-            $("#defender-div").append(this);
-            defenderSelected = true;
+            for (let i=0; i<charArr.length; i++) {
+                if (charArr[i].name === this.id) {
+                    var charImg = $("<img>")
+                    charImg.removeClass("enemies");
+                    charImg.addClass("defender");
+                    $("#defender-div").append(this);
+                    defenderSelected = true;
+                    defender = charArr[i];
+                }
+            }
         }
     })
 })
 
+
+var attackFun = function(player, defender) {
+    if (player.hp > 0 && defender.hp > 0) {
+        defender.hp - player.ap;
+        if (defender.hp > 0) {
+            player.hp - defender.ca;
+        }
+    }
+    console.log(player.hp, defender.hp);
+}
+
 $("#fight-button").on("click", function () {
-    console.log("fighting");
     if (playerChosen && defenderSelected) {
-        console.log("oh yeah");
+        console.log("fighting", player.hp);
+        attackFun(player, defender);
     }
 })
+
+
 
 
     
