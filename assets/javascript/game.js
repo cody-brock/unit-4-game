@@ -183,7 +183,7 @@ $("#restart-button").css("display", "none");
                 defenderSelected = false;
             }
             //if there are no more enemies...
-            if ($("#enemies-div").is(":empty")) {
+            if ($("#enemies-div").is(":empty") && $("#defender-div").is(":empty")) {
                 //Victory condition
                 $("#messages").text("You Won!!!! GAME OVER!!!");
                 $("#restart-button").css("display", "block");
