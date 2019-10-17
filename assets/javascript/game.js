@@ -33,10 +33,10 @@ $("#restart-button").css("display", "none");
     }
 
     //gives the constructor the info it needs
-    var mouse = new Character("mouse",120,15,20,"assets/images/mouse-droid.jpeg");
-    var willrow = new Character("willrow",150,10,15, "assets/images/willrow-hood.jpg");
-    var porkins = new Character("porkins", 100,10,10, "assets/images/porkins-2.webp");
-    var figrin = new Character("figrin", 160,15,70, "assets/images/figrin-dan.jpg"); 
+    var mouse = new Character("Mouse",120,15,20,"assets/images/mouse-droid.jpeg");
+    var willrow = new Character("Willrow",150,10,15, "assets/images/willrow-hood.jpg");
+    var porkins = new Character("Porkins", 100,10,10, "assets/images/porkins-2.webp");
+    var figrin = new Character("Figrin", 160,15,70, "assets/images/figrin-dan.jpg"); 
 
     //pushes the character images onto the page, adds class and id
     function makeImgDiv (x, destination) {
@@ -64,6 +64,7 @@ $("#restart-button").css("display", "none");
                     player = charArr[i];
                     charArr.splice(i, 1);
                     $("#your-character").append(this);
+                    apIncrement = charArr[i].ap;
                 }
             }
 
@@ -99,12 +100,18 @@ $("#restart-button").css("display", "none");
 
     //function to increment player's attack power
     var playerAttackIncrease = function(player) {
-        player.ap = player.ap + player.ap;
+        player.ap = player.ap + apIncrement;
     }
 
+    $.fn.multiline = function(text){
+        this.text(text);
+        this.html(this.html().replace(/\n/g,'<br/>'));
+        return this;
+    }
 
     //function for handling the logic behind the attack button conditions
     var attackFun = function(player, defender) {
+        //clear messages thing?????????
         //if both characters have hp left...
         if (player.hp > 0 && defender.hp > 0) {
             //first player attacks defender
@@ -114,21 +121,33 @@ $("#restart-button").css("display", "none");
             //if defender still has hp...
             if (defender.hp > 0) {
                 player.hp = player.hp - defender.ca;
-
             } 
+            //if the player has no more health...
             if (player.hp <= 0) {
+                console.log("losing");
+                $("#messages").empty();
                 $("#messages").text("You have been defeated...GAME OVER!!!");
                 $("#restart-button").css("display", "block");
-                // console.log("hello?")
+                return;
             }
             //if defender has no hp, victory conditions met, remove defender
             //and allow new one to be selected
             else if (defender.hp <= 0) {
+                $("#messages").empty();
                 $("#messages").text("You have defeated " + defender.name + ". You can choose to fight another enemy.")
                 $("#defender-div").empty();
                 defenderSelected = false;
             }
+            //if there are no more enemies...
+            if ($("#enemies-div").is(":empty")) {
+                //Victory condition
+                $("#messages").text("You Won!!!! GAME OVER!!!");
+                $("#restart-button").css("display", "block");
+                return;
+            }
         }
+        $("#messages").multiline("You attacked " + defender.name + " for " + player.ap + " damage. \n" + defender.name + " attacked you back for " + defender.ca + " damage.");
+
         console.log(player.hp, defender.hp);
     }
 
