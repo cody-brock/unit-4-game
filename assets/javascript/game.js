@@ -140,8 +140,29 @@ $("#restart-button").css("display", "none");
                 player.hp = player.hp - defender.ca;
             } 
 
-            console.log(player);
-            // makeImgDiv(player, $("#character-div"));
+            
+                //this updates the hp on each card - horribly redundant
+                    let defenderCard = 
+                        `<div class="characters enemies" style="width: 170px;" id="${defender.name}">
+                            <div>${defender.name}</div>
+                            <div><img class="characters-img" src="${defender.picSrc}"></div>
+                            <div>${defender.hp}</div>
+                        </div>`
+                        $("#defender-div").empty();
+                        $("#defender-div").append(defenderCard); 
+
+                    let playerCard = 
+                        `<div class="characters cards-characters-div" style="width: 170px;" id="${player.name}">
+                            <div>${player.name}</div>
+                            <div><img class="characters-img" src="${player.picSrc}"></div>
+                            <div>${player.hp}</div>
+                        </div>`
+                        $("#your-character").empty();
+                        $("#your-character").append(playerCard); 
+                //ends the section of horrible redundancy
+            
+
+
 
 
             //if the player has no more health...
@@ -150,6 +171,7 @@ $("#restart-button").css("display", "none");
                 $("#messages").empty();
                 $("#messages").text("You have been defeated...GAME OVER!!!");
                 $("#restart-button").css("display", "block");
+                defenderSelected = false;
                 return;
             }
             //if defender has no hp, victory conditions met, remove defender
