@@ -1,11 +1,7 @@
 $(document).ready(function initialize() {
     console.log("ready");
 
-var name = "";
-var hp = 0;
-var attack = 0;
-var counter = 0;
-var img;
+
 var charArr = [];
 var playerChosen = false;
 var defenderSelected = false;
@@ -41,19 +37,28 @@ $("#restart-button").css("display", "none");
     //pushes the character images onto the page, adds class and id
     function makeImgDiv (x, destination) {
         x.forEach(element => {
-            var charImg = $("<img>");
-            charImg.addClass("characters");
-            charImg.attr("src", element.picSrc);
-            charImg.attr("id", element.name);
-            // $("#characters-div").append(charImg);
-            $(destination).append(charImg);
-            charImg.append(element.name + "<br>")
-            // console.log(charImg);
-            charImg.append()
+            let card = 
+            `<div class="characters cards-characters-div" style="width: 170px;" id="${element.name}">
+                <div>${element.name}</div>
+                <div><img class="characters-img" src="${element.picSrc}"></div>
+                <div>${element.hp}</div>
+            </div>`
+            // if ()
+                $(destination).append(card);
+
+
+
+            // OLD WAY
+        // x.forEach(element => {
+        //     var charImg = $("<img>"); -- ??
+        //     charImg.addClass("characters"); -- done
+        //     charImg.attr("src", element.picSrc); -- done
+        //     charImg.attr("id", element.name); -- done?
+        //     $(destination).append(charImg); -- done
         });
     }
 
-    makeImgDiv(charArr, "#characters-div")
+    makeImgDiv(charArr, "#characters-div");
 
     //Choose character and move others into Enemies div
     $(".characters").on("click", function () {
@@ -62,20 +67,35 @@ $("#restart-button").css("display", "none");
                 if (charArr[i].name === this.id) {
                     playerChosen = true;
                     player = charArr[i];
+                    apIncrement = charArr[i].ap;
                     charArr.splice(i, 1);
                     $("#your-character").append(this);
-                    apIncrement = charArr[i].ap;
                 }
             }
 
             for (let i=0; i<charArr.length; i++) {
-                var charImg = $("<img>")
-                charImg.removeClass("characters");
-                charImg.addClass("enemies");
-                charImg.attr("src", charArr[i].picSrc);
-                charImg.attr("id", charArr[i].name)
-                $("#enemies-div").append(charImg);
-                $("#characters-div").empty();
+                // charArr.forEach(element => {
+                    let card = 
+                        `<div class="characters enemies" style="width: 170px;" id="${charArr[i].name}">
+                            <div>${charArr[i].name}</div>
+                            <div><img class="characters-img" src="${charArr[i].picSrc}"></div>
+                            <div>${charArr[i].hp}</div>
+                        </div>`
+                        $("#enemies-div").append(card);
+                        $("#characters-div").empty();
+                // })
+
+
+                // var charImg = $("<img>")
+                // charImg.removeClass("characters");
+                // charImg.addClass("enemies");
+                // charImg.attr("src", charArr[i].picSrc);
+                // charImg.attr("id", charArr[i].name)
+                // $("#enemies-div").append(charImg);
+                // $("#characters-div").empty();
+
+
+
             }    
         }   
 
@@ -111,17 +131,19 @@ $("#restart-button").css("display", "none");
 
     //function for handling the logic behind the attack button conditions
     var attackFun = function(player, defender) {
-        //clear messages thing?????????
         //if both characters have hp left...
         if (player.hp > 0 && defender.hp > 0) {
             //first player attacks defender
             defender.hp = defender.hp - player.ap;
-            //increments the player's attack power
-            playerAttackIncrease(player);
             //if defender still has hp...
             if (defender.hp > 0) {
                 player.hp = player.hp - defender.ca;
             } 
+
+            console.log(player);
+            // makeImgDiv(player, $("#character-div"));
+
+
             //if the player has no more health...
             if (player.hp <= 0) {
                 console.log("losing");
@@ -146,8 +168,14 @@ $("#restart-button").css("display", "none");
                 return;
             }
         }
-        $("#messages").multiline("You attacked " + defender.name + " for " + player.ap + " damage. \n" + defender.name + " attacked you back for " + defender.ca + " damage.");
 
+
+        
+
+
+        $("#messages").multiline("You attacked " + defender.name + " for " + player.ap + " damage. \n" + defender.name + " attacked you back for " + defender.ca + " damage.");
+        //increments the player's attack power
+        playerAttackIncrease(player);
         console.log(player.hp, defender.hp);
     }
 
@@ -167,32 +195,3 @@ $("#restart-button").css("display", "none");
 
 
 })
-    
-        
-            
-   
-
-
-//moves characters from place to place
-
-
-
-// console.log(charArr[0]);
-// console.log("outside click", mouse.ap);
-
-//Choose character
-// $(".characters").on("click", function() {
-//     console.log("inside click", $( this ).ap);
-//     console.log(($(this).attr("name")));
-// });
-
-// // console.log(mouse.name)
-
-
-// $(".character").on("click", function() {
-//     // let attackPoints = ${this.name};
-//     console.log("${this.name}");
-//     // attackTally += this.ap;
-//     // console.log('you have dealt ' + attackTally + ' damage!');
-// });
-

@@ -1,19 +1,49 @@
-.characters {
+.characters-img {
     height: 100px;
     width: 150px;
-    padding: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    /* border-style: solid;
+    border-width: 5px;
+    border-color: green; */
+}
+
+#characters-div {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#enemies-div {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cards-characters-div {
+    margin: 5px;
+    display: relative;
+    height: 143px;
+    width: 170px;
+    padding-top: 3px;
     border-style: solid;
     border-width: 5px;
     border-color: green;
+    text-align: center;
+}
+
+.text {
+    margin: 10px;
 }
 
 .enemies {
-    height: 100px;
-    width: 150px;
-    padding: 10px;
+    margin: 5px;
+    display: relative;
+    height: 143px;
+    width: 170px;
+    padding-top: 3px;
     border-style: solid;
     border-width: 5px;
     border-color: red;
+    text-align: center;
 }
 
 #restart-button {
