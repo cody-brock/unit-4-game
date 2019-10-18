@@ -1,18 +1,19 @@
 $(document).ready(function initialize() {
-    console.log("ready");
 
+    //global variables
+    var charArr = [];
+    var playerChosen = false;
+    var defenderSelected = false;
+    var player;
+    var defender;
 
-var charArr = [];
-var playerChosen = false;
-var defenderSelected = false;
-var player;
-var defender;
-$("#characters-div").empty();
-$("#your-character").empty();
-$("#enemies-div").empty();
-$("#defender-div").empty();
-$("#messages").empty();
-$("#restart-button").css("display", "none");
+    //empties the messages for re-setting the game cleanly
+    $("#characters-div").empty();
+    $("#your-character").empty();
+    $("#enemies-div").empty();
+    $("#defender-div").empty();
+    $("#messages").empty();
+    $("#restart-button").css("display", "none");
 
 
 
@@ -33,6 +34,18 @@ $("#restart-button").css("display", "none");
     var willrow = new Character("Willrow",150,10,15, "assets/images/willrow-hood.jpg");
     var porkins = new Character("Porkins", 100,10,10, "assets/images/porkins-2.webp");
     var figrin = new Character("Figrin", 160,15,70, "assets/images/figrin-dan.jpg"); 
+
+    //imgUpdate updates the cards with updated hp each attack
+    let imgUpdate = function(element, destination, classer) {
+        let card = 
+            `<div class="characters ${classer}" style="width: 170px;" id="${element.name}">
+                <div>${element.name}</div>
+                <div><img class="characters-img" src="${element.picSrc}"></div>
+                <div>${element.hp}</div>
+            </div>`
+            $(destination).append(card);
+    }
+
 
     //pushes the character images onto the page, adds class and id
     function makeImgDiv (x, destination) {
@@ -63,15 +76,9 @@ $("#restart-button").css("display", "none");
             }
 
             for (let i=0; i<charArr.length; i++) {
-                    let card = 
-                        `<div class="characters enemies" style="width: 170px;" id="${charArr[i].name}">
-                            <div>${charArr[i].name}</div>
-                            <div><img class="characters-img" src="${charArr[i].picSrc}"></div>
-                            <div>${charArr[i].hp}</div>
-                        </div>`
-                        $("#enemies-div").append(card);
-                        $("#characters-div").empty();
-            }    
+                imgUpdate(charArr[i], "#enemies-div", "enemies");
+                }    
+                $("#characters-div").empty();
         }   
 
         //choose defender, move to Defender div
@@ -98,6 +105,7 @@ $("#restart-button").css("display", "none");
         player.ap = player.ap + apIncrement;
     }
 
+    //RegEx that allows me to add a line break mid-text for #messages
     $.fn.multiline = function(text){
         this.text(text);
         this.html(this.html().replace(/\n/g,'<br/>'));
@@ -115,67 +123,45 @@ $("#restart-button").css("display", "none");
                 player.hp = player.hp - defender.ca;
             } 
 
+            //This updates the defender's hp on card
+            $("#defender-div").empty();
+            imgUpdate(defender, "#defender-div", "enemies");
+
+            //this updates the character's hp on card
+            $("#your-character").empty();
+            imgUpdate(player, "#your-character", "cards-characters-div");
+    
             
-                //this updates the hp on each card - horribly redundant
-                    let defenderCard = 
-                        `<div class="characters enemies" style="width: 170px;" id="${defender.name}">
-                            <div>${defender.name}</div>
-                            <div><img class="characters-img" src="${defender.picSrc}"></div>
-                            <div>${defender.hp}</div>
-                        </div>`
-                        $("#defender-div").empty();
-                        $("#defender-div").append(defenderCard); 
-
-                    let playerCard = 
-                        `<div class="characters cards-characters-div" style="width: 170px;" id="${player.name}">
-                            <div>${player.name}</div>
-                            <div><img class="characters-img" src="${player.picSrc}"></div>
-                            <div>${player.hp}</div>
-                        </div>`
-                        $("#your-character").empty();
-                        $("#your-character").append(playerCard); 
-                //ends the section of horrible redundancy
-            
-
-
-
-
             //if the player has no more health...
             if (player.hp <= 0) {
-                console.log("losing");
                 $("#messages").empty();
                 $("#messages").text("You have been defeated...GAME OVER!!!");
                 $("#restart-button").css("display", "block");
-                defenderSelected = false;
+                playerChosen = false;
                 return;
             }
-            //if defender has no hp, victory conditions met, remove defender
-            //and allow new one to be selected
+            //if defender has no hp, victory conditions met, remove defender, prompts message, and allow new one to be selected
              if (defender.hp <= 0) {
-                 console.log("here we are");
                 $("#messages").empty();
                 $("#messages").text("You have defeated " + defender.name + ". You can choose to fight another enemy.")
                 $("#defender-div").empty();
                 defenderSelected = false;
-                return;
-            }
-            //if there are no more enemies...
-            if ($("#enemies-div").is(":empty") && $("#defender-div").is(":empty")) {
-                //Victory condition
-                $("#messages").text("You Won!!!! GAME OVER!!!");
-                $("#restart-button").css("display", "block");
-                return;
+                //if there are no more enemies...
+                if ($("#enemies-div").is(":empty") && $("#defender-div").is(":empty")) {
+                    //FULL victory condition
+                    $("#messages").text("You Won!!!! GAME OVER!!!");
+                    $("#restart-button").css("display", "block");
+                    return;
+                } 
+                //but if there are more enemies, carry on
+                else return;
             }
         }
 
-
-        
-
-
+        //prompts messages mid-battle to update user on attacks
         $("#messages").multiline("You attacked " + defender.name + " for " + player.ap + " damage. \n" + defender.name + " attacked you back for " + defender.ca + " damage.");
         //increments the player's attack power
         playerAttackIncrease(player);
-        console.log(player.hp, defender.hp);
     }
 
     //when "attack" button is pressed...
