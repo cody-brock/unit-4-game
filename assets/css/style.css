@@ -1,9 +1,15 @@
+h1 {
+    padding-top: 40px;
+}
+
 body {
     background: url(../images/background-image.jpg) no-repeat center center fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    color: greenyellow;
+    font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
 }
 
 .characters-img {
@@ -11,9 +17,6 @@ body {
     width: 150px;
     padding-top: 3px;
     padding-bottom: 3px;
-    /* border-style: solid;
-    border-width: 5px;
-    border-color: green; */
 }
 
 #characters-div {
@@ -37,6 +40,7 @@ body {
     border-color: green;
     text-align: center;
     background-color: white;
+    color: black;
 }
 
 .text {

@@ -151,11 +151,13 @@ $("#restart-button").css("display", "none");
             }
             //if defender has no hp, victory conditions met, remove defender
             //and allow new one to be selected
-            else if (defender.hp <= 0) {
+             if (defender.hp <= 0) {
+                 console.log("here we are");
                 $("#messages").empty();
                 $("#messages").text("You have defeated " + defender.name + ". You can choose to fight another enemy.")
                 $("#defender-div").empty();
                 defenderSelected = false;
+                return;
             }
             //if there are no more enemies...
             if ($("#enemies-div").is(":empty") && $("#defender-div").is(":empty")) {
