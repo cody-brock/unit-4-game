@@ -29,7 +29,7 @@ body {
     flex-wrap: wrap;
 }
 
-.cards-characters-div {
+.cards {
     margin: 5px;
     display: relative;
     height: 143px;
@@ -37,8 +37,12 @@ body {
     padding-top: 3px;
     border-style: solid;
     border-width: 5px;
-    border-color: green;
     text-align: center;
+}
+
+/* .cards-characters-div  */
+.player {
+    border-color: green;
     background-color: white;
     color: black;
 }
@@ -48,15 +52,7 @@ body {
 }
 
 .enemies {
-    margin: 5px;
-    display: relative;
-    height: 143px;
-    width: 170px;
-    padding-top: 3px;
-    border-style: solid;
-    border-width: 5px;
     border-color: red;
-    text-align: center;
     background-color: black;
     color: white;
 }

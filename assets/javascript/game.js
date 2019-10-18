@@ -15,8 +15,7 @@ $(document).ready(function initialize() {
     $("#messages").empty();
     $("#restart-button").css("display", "none");
 
-
-
+    
     //Constructor to give characters their attributes
     class Character {
         constructor(name,hp,ap,ca,picSrc){
@@ -38,7 +37,7 @@ $(document).ready(function initialize() {
     //imgUpdate updates the cards with updated hp each attack
     let imgUpdate = function(element, destination, classer) {
         let card = 
-            `<div class="characters ${classer}" style="width: 170px;" id="${element.name}">
+            `<div class="characters player cards ${classer}" style="width: 170px;" id="${element.name}">
                 <div>${element.name}</div>
                 <div><img class="characters-img" src="${element.picSrc}"></div>
                 <div>${element.hp}</div>
@@ -46,12 +45,11 @@ $(document).ready(function initialize() {
             $(destination).append(card);
     }
 
-
     //pushes the character images onto the page, adds class and id
     function makeImgDiv (x, destination) {
         x.forEach(element => {
             let card = 
-            `<div class="characters cards-characters-div" style="width: 170px;" id="${element.name}">
+            `<div class="characters player cards" style="width: 170px;" id="${element.name}">
                 <div>${element.name}</div>
                 <div><img class="characters-img" src="${element.picSrc}"></div>
                 <div>${element.hp}</div>
@@ -77,8 +75,8 @@ $(document).ready(function initialize() {
 
             for (let i=0; i<charArr.length; i++) {
                 imgUpdate(charArr[i], "#enemies-div", "enemies");
-                }    
-                $("#characters-div").empty();
+            }    
+            $("#characters-div").empty();
         }   
 
         //choose defender, move to Defender div
@@ -103,13 +101,6 @@ $(document).ready(function initialize() {
     //function to increment player's attack power
     var playerAttackIncrease = function(player) {
         player.ap = player.ap + apIncrement;
-    }
-
-    //RegEx that allows me to add a line break mid-text for #messages
-    $.fn.multiline = function(text){
-        this.text(text);
-        this.html(this.html().replace(/\n/g,'<br/>'));
-        return this;
     }
 
     //function for handling the logic behind the attack button conditions
@@ -159,7 +150,7 @@ $(document).ready(function initialize() {
         }
 
         //prompts messages mid-battle to update user on attacks
-        $("#messages").multiline("You attacked " + defender.name + " for " + player.ap + " damage. \n" + defender.name + " attacked you back for " + defender.ca + " damage.");
+        $("#messages").html("You attacked " + defender.name + " for " + player.ap + " damage. <br>" + defender.name + " attacked you back for " + defender.ca + " damage.");
         //increments the player's attack power
         playerAttackIncrease(player);
     }
@@ -175,8 +166,5 @@ $(document).ready(function initialize() {
     $("#restart-button").on("click", function() {
         initialize();
     })
-
-
-
 
 })
