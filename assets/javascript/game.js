@@ -43,18 +43,7 @@ $("#restart-button").css("display", "none");
                 <div><img class="characters-img" src="${element.picSrc}"></div>
                 <div>${element.hp}</div>
             </div>`
-            // if ()
-                $(destination).append(card);
-
-
-
-            // OLD WAY
-        // x.forEach(element => {
-        //     var charImg = $("<img>"); -- ??
-        //     charImg.addClass("characters"); -- done
-        //     charImg.attr("src", element.picSrc); -- done
-        //     charImg.attr("id", element.name); -- done?
-        //     $(destination).append(charImg); -- done
+            $(destination).append(card);
         });
     }
 
@@ -74,7 +63,6 @@ $("#restart-button").css("display", "none");
             }
 
             for (let i=0; i<charArr.length; i++) {
-                // charArr.forEach(element => {
                     let card = 
                         `<div class="characters enemies" style="width: 170px;" id="${charArr[i].name}">
                             <div>${charArr[i].name}</div>
@@ -83,19 +71,6 @@ $("#restart-button").css("display", "none");
                         </div>`
                         $("#enemies-div").append(card);
                         $("#characters-div").empty();
-                // })
-
-
-                // var charImg = $("<img>")
-                // charImg.removeClass("characters");
-                // charImg.addClass("enemies");
-                // charImg.attr("src", charArr[i].picSrc);
-                // charImg.attr("id", charArr[i].name)
-                // $("#enemies-div").append(charImg);
-                // $("#characters-div").empty();
-
-
-
             }    
         }   
 
