@@ -47,14 +47,14 @@ body {
     color: black;
 }
 
-.text {
-    margin: 10px;
-}
-
 .enemies {
     border-color: red;
     background-color: black;
     color: white;
+}
+
+.text {
+    margin: 10px;
 }
 
 #restart-button {

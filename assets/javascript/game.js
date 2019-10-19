@@ -15,7 +15,7 @@ $(document).ready(function initialize() {
     $("#messages").empty();
     $("#restart-button").css("display", "none");
 
-    
+
     //Constructor to give characters their attributes
     class Character {
         constructor(name,hp,ap,ca,picSrc){
@@ -34,7 +34,7 @@ $(document).ready(function initialize() {
     var porkins = new Character("Porkins", 100,10,10, "assets/images/porkins-2.webp");
     var figrin = new Character("Figrin", 160,15,70, "assets/images/figrin-dan.jpg"); 
 
-    //imgUpdate updates the cards with updated hp each attack
+    //imgUpdate is a reusable function that updates the cards with hp each attack
     let imgUpdate = function(element, destination, classer) {
         let card = 
             `<div class="characters player cards ${classer}" style="width: 170px;" id="${element.name}">
@@ -166,5 +166,4 @@ $(document).ready(function initialize() {
     $("#restart-button").on("click", function() {
         initialize();
     })
-
 })
